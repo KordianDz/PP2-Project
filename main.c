@@ -1,5 +1,14 @@
+//sprawdzanie obecnego OS
+#ifdef _WIN32
+    #include <direct.h> // library dla Windows
+#else
+    #include <sys/stat.h> // library dla Linux/Mac
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <stdbool.h>
 
 typedef struct Data 
 {
@@ -77,14 +86,43 @@ Klient *dodaj_klienta(Klient *head)
     return nowy_klient;
 }
 
-//nieskonczone wyswietlanie w formie zwyklego tekstu
+//wyswietlanie 
 void wyswietlanie_klientow(Klient *head)
 {
     Klient *obecny = head;
     while (obecny != NULL)
     {
-        printf("%s %s\n", obecny->imie, obecny->nazwisko);
+        // Format: ID_KARTY|IMIE|NAZWISKO|MIASTO
+        printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
         obecny = obecny->next;
+    }
+}
+
+//zapis w pliku albo tworzenie jak nie ma go. robie pod windows i unix/mac. do edycji jeszcze, nie skonczone
+bool zapis(Klient *head)
+{
+    const char *sciezka = "data";
+    Klient *obecny = head;
+    #ifdef _WIN32
+        _mkdir(sciezka);
+    #else 
+        mkdir(sciezka, 0777);
+    #endif
+    FILE *zapis;
+    zapis = fopen("data/database.bin", "wb");
+    if (zapis != NULL)
+    {
+        while(obecny != NULL)
+        {    
+            fwrite(obecny, sizeof(Klient), 1, zapis);
+            obecny = obecny->next;
+        }
+        fclose(zapis);
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
