@@ -32,8 +32,9 @@ typedef struct Klient
 
 typedef struct Sprzet
 {
-    int ID;
+    int id_sprzetu;
     char nazwa_sprzetu[30];
+    double cena_za_dzien;
     int liczba_egzemplarzy;
     int liczba_wypozyczonych;
     struct Sprzet *next;
@@ -42,13 +43,15 @@ typedef struct Sprzet
 typedef struct Wypozyczenie
 {
     int numer_karty;
-    int id;
+    int id_sprzetu;
     Data data_wypozyczenia;
     Data data_oddania;
     struct Wypozyczenie *next;
 } Wypozyczenie;
 
-//funkcja do dodawania 
+
+
+//funkcja do dodawania klienta
 Klient *dodaj_klienta(Klient *head)
 {
     Klient *nowy_klient = malloc(sizeof(Klient));
@@ -86,7 +89,7 @@ Klient *dodaj_klienta(Klient *head)
     return nowy_klient;
 }
 
-//wyswietlanie 
+//wyswietlanie klientow z RAMu
 void wyswietlanie_klientow(Klient *head)
 {
     Klient *obecny = head;
@@ -125,13 +128,107 @@ bool zapis(Klient *head)
         return false;
     }
 }
+//wczytywanie bazy danych z pliku do RAM
+Klient *wczytaj_baze()
+{
+    FILE *plik = fopen("data/database.bin", "rb");
+    Klient *head = NULL;
+    Klient temp;
+
+    if (plik != NULL)
+    {
+        while (fread(&temp, sizeof(Klient), 1, plik) == 1)
+        {
+            Klient *nowy = malloc(sizeof(Klient));
+            *nowy = temp;
+            nowy->next = head;
+            head = nowy;
+        }
+
+    }
+    return head;
+}
+
+void dodaj_wypozyczenie(Klient **h_klienci, Sprzet **h_sprzet)
+{
+    int szukana_karta, szukany_sprzet;
+    Klient *obecny_klient = *h_klienci;
+    while(obecny_klient != NULL && obecny_klient->numer_karty != szukana_karta)
+    {
+        obecny_klient = obecny_klient->next;
+
+    }
+    if (obecny_klient == NULL)
+    {
+        printf("Blad. Nie znaleziono klienta!\n");
+        return;
+    }
+    Sprzet *obecny_sprzet = *h_sprzet;
+    while(obecny_sprzet != NULL && obecny_sprzet->id_sprzetu != szukany_sprzet)
+    {
+        obecny_sprzet = obecny_sprzet->next;
+    }
+    if (obecny_sprzet == NULL)
+    {
+        printf("Blad. Nie znaleziono sprzetu!\n");
+        return;
+    }
+    if (obecny_sprzet->liczba_egzemplarzy == 0)
+    {
+        printf("Blad. Brak wolnego egzemplarza do wypozyczenia!\n");
+        return;
+    }
+    
+    
+
+}
+
+void wyczysc_pamiec(Klient *head)
+{
+    Klient *obecny = head;
+    Klient *tmp;
+    while (obecny != NULL)
+    {
+        tmp = obecny -> next;
+        free(obecny);
+        obecny = tmp;
+    }
+}
+
+Sprzet *dodaj_sprzet(Sprzet *head)
+{
+    Sprzet *nowy_sprzet = malloc(sizeof(Sprzet));
+    if (nowy_sprzet == NULL)
+    {
+        printf("Blad. Brak pamieci RAM!\n");
+        return head;
+    }
+    //ponownie, generowanie numeru ID by bylo pomocne, ale zostawiam narazie wpisywanie reczne
+    printf("Podaj ID sprzetu.\n");
+    scanf("%d", &nowy_sprzet->id_sprzetu);
+
+    printf("Podaj nazwe sprzetu.\n");
+    scanf("%s", nowy_sprzet->nazwa_sprzetu);
+
+    printf("Podaj cene sprzetu za dzien.\n");
+    scanf("%lf", &nowy_sprzet->cena_za_dzien);
+
+    printf("Podaj liczbe egzemplarzy.\n");
+    scanf("%d", &nowy_sprzet->liczba_egzemplarzy);
+
+    printf("Podaj liczbe wypozyczonych egzemplarzy (Domyslnie nowy sprzet - 0)\n");
+    scanf("%d", &nowy_sprzet->liczba_wypozyczonych);
+    
+    nowy_sprzet->next = head;
+    return nowy_sprzet;
+}
 
 
 
 int main()
 {
     //heady
-    Klient *head_klienci = NULL;
+    Klient *head_klienci = wczytaj_baze();
     Sprzet *head_sprzet = NULL;
     Wypozyczenie *head_wypozyczenia = NULL;
     
@@ -167,6 +264,7 @@ int main()
             case 3:
                 {
                     printf("Zamykanie...\n");
+                    wyczysc_baze(head_klienci);
                     return 0;
                 }
             default:
