@@ -178,7 +178,17 @@ void dodaj_wypozyczenie(Klient **h_klienci, Sprzet **h_sprzet)
         printf("Blad. Brak wolnego egzemplarza do wypozyczenia!\n");
         return;
     }
-    
+    Wypozyczenie *nowe_wypozyczenie = malloc(sizeof(Wypozyczenie));
+    if (nowe_wypozyczenie == NULL)
+    {
+        printf("Blad. Brak pamieci RAM!\n");
+        return;
+    }
+    nowe_wypozyczenie -> numer_karty = szukana_karta;
+    nowe_wypozyczenie -> id_sprzetu = szukany_sprzet;
+    obecny_sprzet -> liczba_wypozyczonych ++;
+    nowe_wypozyczenie -> next = h_wypozyczenia;
+
     
 
 }
