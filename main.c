@@ -173,7 +173,7 @@ void dodaj_wypozyczenie(Klient **h_klienci, Sprzet **h_sprzet)
         printf("Blad. Nie znaleziono sprzetu!\n");
         return;
     }
-    if (obecny_sprzet->liczba_egzemplarzy == 0)
+    if (obecny_sprzet->liczba_wypozyczonych >= obecny_sprzet->liczba_egzemplarzy)
     {
         printf("Blad. Brak wolnego egzemplarza do wypozyczenia!\n");
         return;
