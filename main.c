@@ -103,6 +103,29 @@ void wyswietlanie_klientow(Klient *head)
     }
 }
 
+void wyswietlanie_sprzetu(Sprzet *head)
+{
+    Sprzet *obecny = head;
+    while (obecny != NULL)
+    {
+        // Format: ID/Cena za dzien/liczba egzemplarzy/liczba wypozyczonych/nazwa sprzetu
+        printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
+        obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_ofert(Wypozyczenie *head)
+{
+    Wypozyczenie *obecny = head;
+    while (obecny != NULL)
+    {
+        // Format: data wypozyczenia/id sprzetu/numer karty/ oplacona kwota/przewidywana data oddania/realna data oddania
+        printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", obecny->data_wypozyczenia.dzien, obecny->data_wypozyczenia.miesiac, obecny->data_wypozyczenia.rok, obecny->id_sprzetu, obecny->numer_karty, obecny->oplacona_kwota, obecny->przewidywana_data_oddania.dzien, obecny->przewidywana_data_oddania.miesiac, obecny->przewidywana_data_oddania.rok, obecny->realna_data_oddania.dzien, obecny->realna_data_oddania.miesiac, obecny->realna_data_oddania.rok);
+        obecny = obecny->next;
+    }
+}
+
+
 //zapis w pliku bazy danych klientow
 bool zapis_klienci(Klient *head)
 {
@@ -613,8 +636,8 @@ int main()
     while(1)
     {
         int opcja = 0;
-        printf("Witamy. Wybierz opcję do administracji systemu wypożyczania nart.\n");
-        printf("1. Wyświetl bazę danych.\n");
+        printf("Witamy. Wybierz opcje do administracji systemu wypozyczania nart.\n");
+        printf("1. Wyswietl baze danych.\n");
         printf("2. Dodaj klienta.\n");
         printf("3. Dodaj sprzet do inwentarza.\n");
         printf("4. Podpisz nowy kontrakt.\n");
@@ -632,6 +655,48 @@ int main()
                 case 1:
                 {
                     printf("Wyświetlam bazę danych.\n");
+                    int opcja2 = 0;
+                    printf("Submenu. Wybierz ktora baze danych wyswietlic: \n");
+                    printf("1. Baza danych - Klienci. \n");
+                    printf("2. Baza danych - Sprzet. \n");
+                    printf("3. Baza danych - Kontrakty. \n");
+                    printf("4. Baza danych - Archiwum. \n");
+                    printf("5. Powrot. \n");
+                    if (scanf("%d", &opcja2) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja2 = -1;
+                    }
+                    else
+                    {
+                        switch (opcja2)
+                        {
+                            case 1:
+                            {
+                                printf("Wyswietlam baze danych - Klienci\n");
+                                wyswietlanie_klientow(head_klienci);
+                                break;
+                            }
+                            case 2:
+                            {
+                                printf("Wyswietlam baze danych - Sprzet\n");
+                                wyswietlanie_sprzetu(head_sprzet);
+                                break;
+                            }
+                            case 3:
+                            {
+                                printf("Wyswietlam baze danych - Oferty\n");
+                                wyswietlanie_ofert(head_wypozyczenia);
+                                break;
+                            }
+                            case 4:
+                            {
+                                printf("Wyswietlam archiwum\n");
+                                wyswietlanie_ofert(head_archiwum);
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
                 case 2:
@@ -643,18 +708,18 @@ int main()
                 case 3:
                 {
                     printf("Dodawanie sprzetu do inwentarza.\n");
-                    dodaj_sprzet(head_sprzet);
+                    head_sprzet = dodaj_sprzet(head_sprzet);
                     break;
                 }
                 case 4:
                 {
-                    printf("Podpisanie kontraktu (wypozyczenie sprzetu np. nart)");
+                    printf("Podpisanie kontraktu (wypozyczenie sprzetu np. nart)\n");
                     dodaj_wypozyczenie(&head_klienci, &head_sprzet, &head_wypozyczenia);
                     break;
                 }
                 case 5:
                 {
-                    printf("Zwrot sprzetu(+ew naliczenie kary)");
+                    printf("Zwrot sprzetu(+ew naliczenie kary)\n");
                     zwroc_sprzet(&head_klienci, &head_sprzet, &head_wypozyczenia, &head_archiwum);
                     break;
                 }
@@ -683,3 +748,7 @@ int main()
 
     return 1;
 }
+
+//%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//dodac sortowanie, usuwanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
+//szyfrowanie, podzial funkcji na inne pliki
