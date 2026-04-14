@@ -343,6 +343,8 @@ Sprzet *wczytaj_sprzet()
     return head;
 }
 
+//co 4 lata przestepny, co 100 lat skreslamy przestepny bo dzien trwa ~365,25dni, wyjatek co 400 lat kiedy blad arytmetyczny czasu gregorianskiego sie wyrownuje
+//uwaga! jak obliczenia sa ok to strata to 1 dzien co 3300 lat
 bool czy_przystepny_rok(int rok)
 {
     if ((rok % 4 == 0 && rok % 100 != 0) || (rok % 400 == 0))
@@ -598,10 +600,6 @@ Sprzet *dodaj_sprzet(Sprzet *head)
     nowy_sprzet->next = head;
     return nowy_sprzet;
 }
-
-//co 4 lata przestepny, co 100 lat skreslamy przestepny bo dzien trwa ~365,25dni, wyjatek co 400 lat kiedy blad arytmetyczny czasu gregorianskiego sie wyrownuje
-//uwaga! jak obliczenia sa ok to strata to 1 dzien co 3300 lat
-
 
 int main()
 {
