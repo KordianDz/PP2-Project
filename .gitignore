@@ -57,3 +57,8 @@ data/database_archive.bin
 data/database_clients.bin
 data/database_offers.bin
 data/database_sprzet.bin
+
+
+
+*.code-workspace
+.vscode/settings.json

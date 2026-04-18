@@ -624,6 +624,87 @@ Sprzet *dodaj_sprzet(Sprzet *head)
     return nowy_sprzet;
 }
 
+///////////////////usuwanie
+
+void Usun_klienta(Klient **h_klienci, Wypozyczenie *head_wypozyczenia)
+{
+    int szukany_nr_karty;
+    printf("Podaj numer karty klienta do usuniecia: ");
+    scanf("%d", &szukany_nr_karty);
+    Wypozyczenie *obecne_wypozyczenie = head_wypozyczenia;
+
+    while (obecne_wypozyczenie != NULL)
+    {
+        if(obecne_wypozyczenie->numer_karty == szukany_nr_karty)
+        {
+            printf("Blad! Klient ma wciaz wypozyczony sprzet. Nie mozna usunac.\n");
+            return;
+        }
+        obecne_wypozyczenie = obecne_wypozyczenie->next;
+    }
+    printf("Klient ma czysta karte. Zaczynam usuwanie...\n");
+    Klient *obecny_klient = *h_klienci;
+    Klient *poprzedni_klient = NULL;
+    while(obecny_klient != NULL && szukany_nr_karty != obecny_klient->numer_karty)
+    {
+        poprzedni_klient = obecny_klient;
+        obecny_klient = obecny_klient->next;
+    }
+    if(obecny_klient == NULL)
+        {
+            printf("Nie odnaleziono klienta!");
+            return;
+        }
+    if (poprzedni_klient == NULL)
+    {
+        *h_klienci = obecny_klient->next;
+    }
+    else
+    {
+        poprzedni_klient->next = obecny_klient->next;
+    }
+    free(obecny_klient);
+    printf("Pomyslnie usunieto klienta z bazy.\n");
+    return;
+}
+
+void usun_sprzet(Sprzet **h_sprzet)
+{
+    int szukane_id;
+    printf("Podaj ID sprzetu do usuniecia: \n");
+    scanf("%d", &szukane_id);
+
+    Sprzet *obecny_sprzet = *h_sprzet;
+    Sprzet *poprzedni_sprzet = NULL;
+
+    while (obecny_sprzet != NULL && obecny_sprzet->id_sprzetu != szukane_id)
+    {
+        poprzedni_sprzet = obecny_sprzet;
+        obecny_sprzet = obecny_sprzet->next;
+    }
+    if (obecny_sprzet == NULL)
+    {
+        printf("Nie odnaleziono sprzetu!\n");
+        return;
+    }
+    if(obecny_sprzet->liczba_wypozyczonych != 0)
+    {
+        printf("Nie mozna usunac sprzetu, jest dalej w wypozyczeniu!\n");
+        return;
+    }
+    if (poprzedni_sprzet == NULL)
+    {
+        *h_sprzet = obecny_sprzet->next;
+    }
+    else
+    {
+        poprzedni_sprzet->next = obecny_sprzet->next;
+    }
+    free(obecny_sprzet);
+    printf("Pomyslnie usunieto sprzet z bazy.\n");
+    return;
+}
+
 int main()
 {
     //heady
@@ -750,5 +831,9 @@ int main()
 }
 
 //%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//dodac sortowanie, usuwanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
+//dodac sortowanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
 //szyfrowanie, podzial funkcji na inne pliki
+//naprawic buffer overflow
+
+
+//dodalem usuwanie klientow/sprzetu
