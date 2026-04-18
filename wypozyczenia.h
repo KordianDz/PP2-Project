@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-//forward declaration
-struct Klienci;
-struct Data;
-struct Sprzet;
+#include "daty.h"
+#include "klienci.h"
+#include "sprzet.h"
+
 
 typedef struct Wypozyczenie
 {

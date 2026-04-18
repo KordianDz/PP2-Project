@@ -3,6 +3,13 @@
 #include "klienci.h"
 #include "sprzet.h"
 
+#ifdef _WIN32
+    #include <direct.h>
+#else 
+    #include <sys/stat.h>
+#endif
+
+
 void wyswietlanie_ofert(Wypozyczenie *head)
 {
     Wypozyczenie *obecny = head;

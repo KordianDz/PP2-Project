@@ -1,6 +1,13 @@
 #include "klienci.h"
 #include "wypozyczenia.h"
 
+#ifdef _WIN32
+    #include <direct.h>
+#else 
+    #include <sys/stat.h>
+#endif
+
+
 Klient *dodaj_klienta(Klient *head)
 {
     Klient *nowy_klient = malloc(sizeof(Klient));
@@ -119,7 +126,7 @@ void wyczysc_pamiec_klient(Klient *head)
     }
 }
 
-void Usun_klienta(Klient **h_klienci, Wypozyczenie *head_wypozyczenia)
+void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia)
 {
     int szukany_nr_karty;
     printf("Podaj numer karty klienta do usuniecia: ");

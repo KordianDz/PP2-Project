@@ -145,3 +145,4 @@ int main()
 
 
 //dodalem usuwanie klientow/sprzetu
+//dodalem modularnosc plikow

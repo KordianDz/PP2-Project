@@ -1,5 +1,11 @@
 #include "sprzet.h"
 
+#ifdef _WIN32
+    #include <direct.h>
+#else 
+    #include <sys/stat.h>
+#endif
+
 bool zapis_sprzet(Sprzet *head_sprzet)
 {
     const char *sciezka = "data";

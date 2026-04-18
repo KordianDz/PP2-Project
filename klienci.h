@@ -31,6 +31,6 @@ Klient *wczytaj_baze_klientow();
 
 void wyczysc_pamiec_klient(Klient *head);
 
-void Usun_klienta(Klient **h_klienci, Wypozyczenie *head_wypozyczenia);
+void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia);
 
 #endif
