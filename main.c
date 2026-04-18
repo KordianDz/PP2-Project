@@ -31,7 +31,8 @@ int main()
         printf("3. Dodaj sprzet do inwentarza.\n");
         printf("4. Podpisz nowy kontrakt.\n");
         printf("5. Zwrot sprzetu (oddanie).\n");
-        printf("6. BEZPIECZNE zamkniecie programu.\n");
+        printf("6. Usun z bazy danych (Klienci/Sprzet).\n");
+        printf("7. BEZPIECZNE zamkniecie programu.\n");
         if (scanf("%d", &opcja) != 1)
         {
             while(getchar() != '\n');
@@ -114,6 +115,49 @@ int main()
                 }
                 case 6:
                 {
+                    int opcja_usun = 0;
+                    printf("Wybierz, co chcesz usunac: \n");
+                    printf("1. Usun klienta.\n");
+                    printf("2. Usun sprzet.\n");
+                    printf("3. Powrot.\n");
+
+                    if (scanf("%d", &opcja_usun) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja_usun = -1;
+                    }
+                    else 
+                    {
+                        switch(opcja_usun)
+                        {
+                            case 1:
+                            {
+                                printf("Wybrano usuwanie klienta. \n");
+                                Usun_klienta(&head_klienci, head_wypozyczenia);
+                                break;
+                            }
+                            case 2:
+                            {
+                                printf("Wybrano usuwanie sprzetu. \n");
+                                usun_sprzet(&head_sprzet);
+                                break;
+                            }
+                            case 3:
+                            {
+                                printf("Powrot do glownego menu.\n");
+                                break;
+                            }
+                            default:
+                            {
+                                printf("Niepoprawna opcja!\n");
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 7:
+                {
                     printf("Zamykanie... Zaczekaj do konca aby uniknac utraty danych!\n");
                     zapis_sprzet(head_sprzet);
                     zapis_archiwum(head_archiwum);
@@ -146,3 +190,4 @@ int main()
 
 //dodalem usuwanie klientow/sprzetu
 //dodalem modularnosc plikow
+//menu ma wszystkie wymienione wczesniej funkcje 
