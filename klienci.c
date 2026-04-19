@@ -31,6 +31,7 @@ Klient *dodaj_klienta(Klient *head)
     printf("Podaj ulice.\n");
     getchar();
     fgets(nowy_klient->ulica, 30, stdin);
+    // podmienienie pobranego \n na znak konca tekstu
     nowy_klient->ulica[strlen(nowy_klient->ulica) - 1] = '\0';
 
     printf("Podaj miasto.\n");
