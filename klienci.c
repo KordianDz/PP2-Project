@@ -17,6 +17,7 @@ Klient *dodaj_klienta(Klient *head)
         printf("Blad. Brak pamieci RAM!\n");
         return head;
     }
+
     // generowanie numeru karty? narazie daje w formie zwyklego wpisania
     printf("Podaj numer karty\n");
     scanf("%d", &nowy_klient->numer_karty);
