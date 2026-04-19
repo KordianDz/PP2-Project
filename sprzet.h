@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+
 typedef struct Sprzet
 {
     int id_sprzetu;
