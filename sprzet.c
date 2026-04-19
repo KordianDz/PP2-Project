@@ -1,4 +1,5 @@
 #include "sprzet.h"
+#include <string.h>
 
 #ifdef _WIN32
     #include <direct.h>
@@ -100,7 +101,9 @@ Sprzet *dodaj_sprzet(Sprzet *head)
     scanf("%d", &nowy_sprzet->id_sprzetu);
 
     printf("Podaj nazwe sprzetu.\n");
-    scanf("%s", nowy_sprzet->nazwa_sprzetu);
+    getchar();
+    fgets(nowy_sprzet->nazwa_sprzetu, 30, stdin);
+    nowy_sprzet->nazwa_sprzetu[strlen(nowy_sprzet->nazwa_sprzetu) - 1] = '\0';
 
     printf("Podaj cene sprzetu za dzien.\n");
     scanf("%lf", &nowy_sprzet->cena_za_dzien);

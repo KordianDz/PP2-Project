@@ -185,7 +185,9 @@ int main()
 //%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //dodac sortowanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
 //szyfrowanie, podzial funkcji na inne pliki
-//naprawic buffer overflow
+//naprawic buffer overflow to dzisiaj
+//bugfix usuwanie sprzetu po zamknieciu kontraktu z data wczesniejsza niz wypozyczenie
+//bugfix zmienna przyjmuje tylko liczby, a liter/znaku nie
 
 
 //dodalem usuwanie klientow/sprzetu

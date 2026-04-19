@@ -12,12 +12,12 @@ typedef struct Klient
 {
     int numer_karty;
     char imie[20];
-    char nazwisko[20];
+    char nazwisko[30];
     char ulica[30];
     char miasto[30];
     int nr_domu;
     int nr_mieszkania;
-    char nr_telefonu[15];
+    char nr_telefonu[20];
     struct Klient *next;
 } Klient;
 

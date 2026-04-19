@@ -1,5 +1,6 @@
 #include "klienci.h"
 #include "wypozyczenia.h"
+#include <string.h>
 
 #ifdef _WIN32
     #include <direct.h>
@@ -21,16 +22,19 @@ Klient *dodaj_klienta(Klient *head)
     scanf("%d", &nowy_klient->numer_karty);
 
     printf("Podaj imie.\n");
-    scanf("%s", nowy_klient->imie);
+    scanf("%19s", nowy_klient->imie);
 
     printf("Podaj nazwisko.\n");
-    scanf("%s", nowy_klient->nazwisko);
+    scanf("%29s", nowy_klient->nazwisko);
 
     printf("Podaj ulice.\n");
-    scanf("%s", nowy_klient->ulica);
+    getchar();
+    fgets(nowy_klient->ulica, 30, stdin);
+    nowy_klient->ulica[strlen(nowy_klient->ulica) - 1] = '\0';
 
     printf("Podaj miasto.\n");
-    scanf("%s", nowy_klient->miasto);
+    fgets(nowy_klient->miasto, 30, stdin);
+    nowy_klient->miasto[strlen(nowy_klient->miasto) - 1] = '\0';
 
     printf("Podaj numer domu.\n");
     scanf("%d", &nowy_klient->nr_domu);
@@ -39,7 +43,10 @@ Klient *dodaj_klienta(Klient *head)
     scanf("%d", &nowy_klient->nr_mieszkania);
 
     printf("Podaj numer telefonu. Mozna dodac numer kierunkowy.\n");
-    scanf("%s", nowy_klient->nr_telefonu);
+    getchar();
+    fgets(nowy_klient->nr_telefonu, 20, stdin);
+    nowy_klient->nr_telefonu[strlen(nowy_klient->nr_telefonu) - 1] = '\0';
+
 
     nowy_klient->next = head;
     return nowy_klient;
