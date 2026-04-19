@@ -8,238 +8,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <stdbool.h>
-
-typedef struct Data 
-{
-    int dzien;
-    int miesiac;
-    int rok;
-} Data;
-
-typedef struct Klient 
-{
-    int numer_karty;
-    char imie[20];
-    char nazwisko[20];
-    char ulica[30];
-    char miasto[30];
-    int nr_domu;
-    int nr_mieszkania;
-    char nr_telefonu[15];
-    struct Klient *next;
-} Klient;
-
-typedef struct Sprzet
-{
-    int id_sprzetu;
-    char nazwa_sprzetu[30];
-    double cena_za_dzien;
-    int liczba_egzemplarzy;
-    int liczba_wypozyczonych;
-    struct Sprzet *next;
-} Sprzet;
-
-typedef struct Wypozyczenie
-{
-    int numer_karty;
-    int id_sprzetu;
-    Data data_wypozyczenia;
-    Data data_oddania;
-    struct Wypozyczenie *next;
-} Wypozyczenie;
-
-
-
-//funkcja do dodawania klienta
-Klient *dodaj_klienta(Klient *head)
-{
-    Klient *nowy_klient = malloc(sizeof(Klient));
-    if (nowy_klient == NULL)
-    {
-        printf("Blad. Brak pamieci RAM!\n");
-        return head;
-    }
-    // generowanie numeru karty? narazie daje w formie zwyklego wpisania
-    printf("Podaj numer karty\n");
-    scanf("%d", &nowy_klient->numer_karty);
-
-    printf("Podaj imie.\n");
-    scanf("%s", nowy_klient->imie);
-
-    printf("Podaj nazwisko.\n");
-    scanf("%s", nowy_klient->nazwisko);
-
-    printf("Podaj ulice.\n");
-    scanf("%s", nowy_klient->ulica);
-
-    printf("Podaj miasto.\n");
-    scanf("%s", nowy_klient->miasto);
-
-    printf("Podaj numer domu.\n");
-    scanf("%d", &nowy_klient->nr_domu);
-
-    printf("Podaj numer mieszkania.\n");
-    scanf("%d", &nowy_klient->nr_mieszkania);
-
-    printf("Podaj numer telefonu. Mozna dodac numer kierunkowy.\n");
-    scanf("%s", nowy_klient->nr_telefonu);
-
-    nowy_klient->next = head;
-    return nowy_klient;
-}
-
-//wyswietlanie klientow z RAMu
-void wyswietlanie_klientow(Klient *head)
-{
-    Klient *obecny = head;
-    while (obecny != NULL)
-    {
-        // Format: ID_KARTY|IMIE|NAZWISKO|MIASTO
-        printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
-        obecny = obecny->next;
-    }
-}
-
-//zapis w pliku albo tworzenie jak nie ma go. robie pod windows i unix/mac. do edycji jeszcze, nie skonczone
-bool zapis(Klient *head)
-{
-    const char *sciezka = "data";
-    Klient *obecny = head;
-    #ifdef _WIN32
-        _mkdir(sciezka);
-    #else 
-        mkdir(sciezka, 0777);
-    #endif
-    FILE *zapis;
-    zapis = fopen("data/database.bin", "wb");
-    if (zapis != NULL)
-    {
-        while(obecny != NULL)
-        {    
-            fwrite(obecny, sizeof(Klient), 1, zapis);
-            obecny = obecny->next;
-        }
-        fclose(zapis);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-//wczytywanie bazy danych z pliku do RAM
-Klient *wczytaj_baze()
-{
-    FILE *plik = fopen("data/database.bin", "rb");
-    Klient *head = NULL;
-    Klient temp;
-
-    if (plik != NULL)
-    {
-        while (fread(&temp, sizeof(Klient), 1, plik) == 1)
-        {
-            Klient *nowy = malloc(sizeof(Klient));
-            *nowy = temp;
-            nowy->next = head;
-            head = nowy;
-        }
-
-    }
-    return head;
-}
-
-void dodaj_wypozyczenie(Klient **h_klienci, Sprzet **h_sprzet)
-{
-    int szukana_karta, szukany_sprzet;
-    Klient *obecny_klient = *h_klienci;
-    while(obecny_klient != NULL && obecny_klient->numer_karty != szukana_karta)
-    {
-        obecny_klient = obecny_klient->next;
-
-    }
-    if (obecny_klient == NULL)
-    {
-        printf("Blad. Nie znaleziono klienta!\n");
-        return;
-    }
-    Sprzet *obecny_sprzet = *h_sprzet;
-    while(obecny_sprzet != NULL && obecny_sprzet->id_sprzetu != szukany_sprzet)
-    {
-        obecny_sprzet = obecny_sprzet->next;
-    }
-    if (obecny_sprzet == NULL)
-    {
-        printf("Blad. Nie znaleziono sprzetu!\n");
-        return;
-    }
-    if (obecny_sprzet->liczba_egzemplarzy == 0)
-    {
-        printf("Blad. Brak wolnego egzemplarza do wypozyczenia!\n");
-        return;
-    }
-    
-    
-
-}
-
-void wyczysc_pamiec(Klient *head)
-{
-    Klient *obecny = head;
-    Klient *tmp;
-    while (obecny != NULL)
-    {
-        tmp = obecny -> next;
-        free(obecny);
-        obecny = tmp;
-    }
-}
-
-Sprzet *dodaj_sprzet(Sprzet *head)
-{
-    Sprzet *nowy_sprzet = malloc(sizeof(Sprzet));
-    if (nowy_sprzet == NULL)
-    {
-        printf("Blad. Brak pamieci RAM!\n");
-        return head;
-    }
-    //ponownie, generowanie numeru ID by bylo pomocne, ale zostawiam narazie wpisywanie reczne
-    printf("Podaj ID sprzetu.\n");
-    scanf("%d", &nowy_sprzet->id_sprzetu);
-
-    printf("Podaj nazwe sprzetu.\n");
-    scanf("%s", nowy_sprzet->nazwa_sprzetu);
-
-    printf("Podaj cene sprzetu za dzien.\n");
-    scanf("%lf", &nowy_sprzet->cena_za_dzien);
-
-    printf("Podaj liczbe egzemplarzy.\n");
-    scanf("%d", &nowy_sprzet->liczba_egzemplarzy);
-
-    printf("Podaj liczbe wypozyczonych egzemplarzy (Domyslnie nowy sprzet - 0)\n");
-    scanf("%d", &nowy_sprzet->liczba_wypozyczonych);
-    
-    nowy_sprzet->next = head;
-    return nowy_sprzet;
-}
-
-
+#include "daty.h"
+#include "sprzet.h"
+#include "klienci.h"
+#include "wypozyczenia.h"
 
 int main()
 {
     //heady
-    Klient *head_klienci = wczytaj_baze();
-    Sprzet *head_sprzet = NULL;
-    Wypozyczenie *head_wypozyczenia = NULL;
+    Klient *head_klienci = wczytaj_baze_klientow();
+    Sprzet *head_sprzet = wczytaj_sprzet();
+    Wypozyczenie *head_wypozyczenia = wczytaj_baze_ofert();
+    Wypozyczenie *head_archiwum = wczytaj_archiwum();
     
-    //main sys nieskonczony
+    //main sys 
     while(1)
     {
         int opcja = 0;
-        printf("Witamy. Wybierz opcję do administracji systemu wypożyczania nart.\n");
-        printf("1. Wyświetl bazę danych.\n");
+        printf("Witamy. Wybierz opcje do administracji systemu wypozyczania nart.\n");
+        printf("1. Wyswietl baze danych.\n");
         printf("2. Dodaj klienta.\n");
-        printf("3. Zamknij program.\n");
+        printf("3. Dodaj sprzet do inwentarza.\n");
+        printf("4. Podpisz nowy kontrakt.\n");
+        printf("5. Zwrot sprzetu (oddanie).\n");
+        printf("6. Usun z bazy danych (Klienci/Sprzet).\n");
+        printf("7. BEZPIECZNE zamkniecie programu.\n");
         if (scanf("%d", &opcja) != 1)
         {
             while(getchar() != '\n');
@@ -249,25 +42,135 @@ int main()
         {
             switch (opcja)
             {
-            case 1:
+                case 1:
                 {
                     printf("Wyświetlam bazę danych.\n");
+                    int opcja2 = 0;
+                    printf("Submenu. Wybierz ktora baze danych wyswietlic: \n");
+                    printf("1. Baza danych - Klienci. \n");
+                    printf("2. Baza danych - Sprzet. \n");
+                    printf("3. Baza danych - Kontrakty. \n");
+                    printf("4. Baza danych - Archiwum. \n");
+                    printf("5. Powrot. \n");
+                    if (scanf("%d", &opcja2) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja2 = -1;
+                    }
+                    else
+                    {
+                        switch (opcja2)
+                        {
+                            case 1:
+                            {
+                                printf("Wyswietlam baze danych - Klienci\n");
+                                wyswietlanie_klientow(head_klienci);
+                                break;
+                            }
+                            case 2:
+                            {
+                                printf("Wyswietlam baze danych - Sprzet\n");
+                                wyswietlanie_sprzetu(head_sprzet);
+                                break;
+                            }
+                            case 3:
+                            {
+                                printf("Wyswietlam baze danych - Oferty\n");
+                                wyswietlanie_ofert(head_wypozyczenia);
+                                break;
+                            }
+                            case 4:
+                            {
+                                printf("Wyswietlam archiwum\n");
+                                wyswietlanie_ofert(head_archiwum);
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
-            case 2:
+                case 2:
                 {
                     printf("Rozpoczynam dodawanie klienta do bazy danych.\n");
                     head_klienci = dodaj_klienta(head_klienci);
-
                     break;
                 }
-            case 3:
+                case 3:
                 {
-                    printf("Zamykanie...\n");
-                    wyczysc_baze(head_klienci);
+                    printf("Dodawanie sprzetu do inwentarza.\n");
+                    head_sprzet = dodaj_sprzet(head_sprzet);
+                    break;
+                }
+                case 4:
+                {
+                    printf("Podpisanie kontraktu (wypozyczenie sprzetu np. nart)\n");
+                    dodaj_wypozyczenie(&head_klienci, &head_sprzet, &head_wypozyczenia);
+                    break;
+                }
+                case 5:
+                {
+                    printf("Zwrot sprzetu(+ew naliczenie kary)\n");
+                    zwroc_sprzet(&head_klienci, &head_sprzet, &head_wypozyczenia, &head_archiwum);
+                    break;
+                }
+                case 6:
+                {
+                    int opcja_usun = 0;
+                    printf("Wybierz, co chcesz usunac: \n");
+                    printf("1. Usun klienta.\n");
+                    printf("2. Usun sprzet.\n");
+                    printf("3. Powrot.\n");
+
+                    if (scanf("%d", &opcja_usun) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja_usun = -1;
+                    }
+                    else 
+                    {
+                        switch(opcja_usun)
+                        {
+                            case 1:
+                            {
+                                printf("Wybrano usuwanie klienta. \n");
+                                Usun_klienta(&head_klienci, head_wypozyczenia);
+                                break;
+                            }
+                            case 2:
+                            {
+                                printf("Wybrano usuwanie sprzetu. \n");
+                                usun_sprzet(&head_sprzet);
+                                break;
+                            }
+                            case 3:
+                            {
+                                printf("Powrot do glownego menu.\n");
+                                break;
+                            }
+                            default:
+                            {
+                                printf("Niepoprawna opcja!\n");
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    printf("Zamykanie... Zaczekaj do konca aby uniknac utraty danych!\n");
+                    zapis_sprzet(head_sprzet);
+                    zapis_archiwum(head_archiwum);
+                    zapis_klienci(head_klienci);
+                    zapis_oferty(head_wypozyczenia);
+                    wyczysc_pamiec_archiwum(head_archiwum);
+                    wyczysc_pamiec_klient(head_klienci);
+                    wyczysc_pamiec_oferty(head_wypozyczenia);
+                    wyczysc_pamiec_sprzet(head_sprzet);
+                    printf("Bezpiecznie zapisano i zamknieto program.\n");
                     return 0;
                 }
-            default:
+                default:
                 {
                     printf("Wybrano nieprawidłową opcję. Spróbuj ponownie.");
                     break;   
@@ -278,3 +181,15 @@ int main()
 
     return 1;
 }
+
+//%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//dodac sortowanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
+//szyfrowanie, podzial funkcji na inne pliki
+//naprawic buffer overflow to dzisiaj
+//bugfix usuwanie sprzetu po zamknieciu kontraktu z data wczesniejsza niz wypozyczenie
+//bugfix zmienna przyjmuje tylko liczby, a liter/znaku nie
+
+
+//dodalem usuwanie klientow/sprzetu
+//dodalem modularnosc plikow
+//menu ma wszystkie wymienione wczesniej funkcje 
