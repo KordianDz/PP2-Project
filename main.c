@@ -12,6 +12,7 @@
 #include "sprzet.h"
 #include "klienci.h"
 #include "wypozyczenia.h"
+#include "funkcje_universalne.h"
 
 int main()
 {
@@ -65,26 +66,136 @@ int main()
                         {
                             case 1:
                             {
-                                printf("Wyswietlam baze danych - Klienci\n");
-                                wyswietlanie_klientow(head_klienci);
+                                int opcja2_1 = 0;
+                                printf("1. Wyświetl w kolejnosci dodania.\n");
+                                printf("2. Wyświetl w kolejnosci alfabetycznej po imieniu.\n");
+                                printf("3. Wyświetl w kolejnosci alfabetycznej po nazwisku.\n");
+                                if (scanf("%d", &opcja2_1) != 1)
+                                {
+                                    while(getchar() != '\n')
+                                    opcja2_1 = -1;
+                                }
+                                switch(opcja2_1)
+                                {
+                                    case 1:
+                                    {
+                                        wyswietlanie_klientow(head_klienci);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        wyswietlanie_klientow_alfabetycznie_imie(head_klienci);
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        wyswietlanie_klientow_alfabetycznie_nazwisko(head_klienci);
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                             case 2:
                             {
-                                printf("Wyswietlam baze danych - Sprzet\n");
-                                wyswietlanie_sprzetu(head_sprzet);
+                                int opcja2_2 = 0;
+                                printf("1. Wyświetl w kolejnosci dodania.\n");
+                                printf("2. Wyświetl w kolejnosci alfabetycznej po nazwie.\n");
+                                if (scanf("%d", &opcja2_2) != 1)
+                                {
+                                    while(getchar() != '\n')
+                                    opcja2_2 = -1;
+                                }
+                                switch(opcja2_2)
+                                {
+                                    case 1:
+                                    {
+                                        wyswietlanie_sprzetu(head_sprzet);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        wyswietlanie_sprzetu_alfabetycznie(head_sprzet);
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                             case 3:
                             {
-                                printf("Wyswietlam baze danych - Oferty\n");
-                                wyswietlanie_ofert(head_wypozyczenia);
+                                int opcja2_3 = 0;
+                                printf("1. Wyświetl w kolejnosci dodania.\n");
+                                printf("2. Wyświetl w kolejnosci od najdroższej.\n");
+                                printf("3. Wyświetl w kolejnosci od najtańszej.\n");
+                                if (scanf("%d", &opcja2_3) != 1)
+                                {
+                                    while(getchar() != '\n')
+                                    opcja2_3 = -1;
+                                }
+                                switch(opcja2_3)
+                                {
+                                    case 1:
+                                    {
+                                        wyswietlanie_ofert(head_wypozyczenia);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        wyswietlanie_ofert_od_najdrozszej(head_wypozyczenia);
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        wyswietlanie_ofert_od_najtanszej(head_wypozyczenia);
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                             case 4:
                             {
-                                printf("Wyswietlam archiwum\n");
-                                wyswietlanie_ofert(head_archiwum);
+                                int opcja2_4 = 0;
+                                printf("1. Wyświetl w kolejnosci dodania.\n");
+                                printf("2. Wyświetl w kolejnosci od najdroższej.\n");
+                                printf("3. Wyświetl w kolejnosci od najtańszej.\n");
+                                if (scanf("%d", &opcja2_4) != 1)
+                                {
+                                    while(getchar() != '\n')
+                                    opcja2_4 = -1;
+                                }
+                                switch(opcja2_4)
+                                {
+                                    case 1:
+                                    {
+                                        wyswietlanie_ofert(head_archiwum);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        wyswietlanie_ofert_od_najdrozszej(head_archiwum);
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        wyswietlanie_ofert_od_najtanszej(head_archiwum);
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                         }
@@ -253,12 +364,13 @@ int main()
 }
 
 //%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//dodac sortowanie, wyswietlanie 5 ostatnich z historii
+//wyswietlanie 5 ostatnich z historii
 //szyfrowanie, podzial funkcji na inne pliki
-//bugfix usuwanie sprzetu po zamknieciu kontraktu z data wczesniejsza niz wypozyczenie
 //bugfix zmienna przyjmuje tylko liczby, a liter/znaku nie
+//bugfix usuwanie sprzetu po zamknieciu kontraktu z data wczesniejsza niz wypozyczenie
 
 //%%%% JUZ ZROBIONE %%%%%%%%%%%%%%%%
+//sortowanie
 //wyszukiwanie
 //naprawic buffer overflow to dzisiaj
 //dodalem usuwanie klientow/sprzetu

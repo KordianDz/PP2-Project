@@ -23,6 +23,10 @@ typedef struct Wypozyczenie
 
 void wyswietlanie_ofert(Wypozyczenie *head);
 
+void wyswietlanie_ofert_od_najdrozszej(Wypozyczenie *head);
+
+void wyswietlanie_ofert_od_najtanszej(Wypozyczenie *head);
+
 bool zapis_archiwum(Wypozyczenie *head_archiwum);
 
 bool zapis_oferty(Wypozyczenie *head_wypozyczenia);

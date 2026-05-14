@@ -25,6 +25,10 @@ Klient *dodaj_klienta(Klient *head);
 
 void wyswietlanie_klientow(Klient *head);
 
+void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head);
+
+void wyswietlanie_klientow_alfabetycznie_imie(Klient *head);
+
 bool zapis_klienci(Klient *head);
 
 Klient *wczytaj_baze_klientow();

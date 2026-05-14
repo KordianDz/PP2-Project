@@ -1,4 +1,5 @@
 #include "sprzet.h"
+#include "funkcje_universalne.h"
 #include <string.h>
 
 #ifdef _WIN32
@@ -73,6 +74,55 @@ void wyswietlanie_sprzetu(Sprzet *head)
         // Format: ID/Cena za dzien/liczba egzemplarzy/liczba wypozyczonych/nazwa sprzetu
         printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
         obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head)
+{
+    if(head == NULL || head->next == NULL)
+        {
+            return;
+        }
+
+
+    Sprzet *obecny = head;
+    Sprzet *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(porownaj_male_litery(obecny->nazwa_sprzetu, nastepny->nazwa_sprzetu) > 0)
+            {
+                Sprzet *oryginal_obecny_next = obecny->next;
+                Sprzet *oryginal_nastepny_next = nastepny->next;
+
+                Sprzet temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
+    obecny = obecny->next;
     }
 }
 

@@ -21,6 +21,102 @@ void wyswietlanie_ofert(Wypozyczenie *head)
     }
 }
 
+void wyswietlanie_ofert_od_najdrozszej(Wypozyczenie *head)
+{
+    if(head == NULL || head->next == NULL)
+        {
+            return;
+        }
+
+    Wypozyczenie *obecny = head;
+    Wypozyczenie *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(obecny->oplacona_kwota < nastepny->oplacona_kwota)
+            {
+                Wypozyczenie *oryginal_obecny_next = obecny->next;
+                Wypozyczenie *oryginal_nastepny_next = nastepny->next;
+
+                Wypozyczenie temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", obecny->data_wypozyczenia.dzien, obecny->data_wypozyczenia.miesiac, obecny->data_wypozyczenia.rok, obecny->id_sprzetu, obecny->numer_karty, obecny->oplacona_kwota, obecny->przewidywana_data_oddania.dzien, obecny->przewidywana_data_oddania.miesiac, obecny->przewidywana_data_oddania.rok, obecny->realna_data_oddania.dzien, obecny->realna_data_oddania.miesiac, obecny->realna_data_oddania.rok);
+        obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_ofert_od_najtanszej(Wypozyczenie *head)
+{
+    if(head == NULL || head->next == NULL)
+        {
+            return;
+        }
+
+    Wypozyczenie *obecny = head;
+    Wypozyczenie *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(obecny->oplacona_kwota > nastepny->oplacona_kwota)
+            {
+                Wypozyczenie *oryginal_obecny_next = obecny->next;
+                Wypozyczenie *oryginal_nastepny_next = nastepny->next;
+
+                Wypozyczenie temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", obecny->data_wypozyczenia.dzien, obecny->data_wypozyczenia.miesiac, obecny->data_wypozyczenia.rok, obecny->id_sprzetu, obecny->numer_karty, obecny->oplacona_kwota, obecny->przewidywana_data_oddania.dzien, obecny->przewidywana_data_oddania.miesiac, obecny->przewidywana_data_oddania.rok, obecny->realna_data_oddania.dzien, obecny->realna_data_oddania.miesiac, obecny->realna_data_oddania.rok);
+        obecny = obecny->next;
+    }
+}
+
 bool zapis_archiwum(Wypozyczenie *head_archiwum)
 {
     const char *sciezka = "data";

@@ -22,6 +22,8 @@ Sprzet *wczytaj_sprzet();
 
 void wyswietlanie_sprzetu(Sprzet *head);
 
+void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head);
+
 void wyczysc_pamiec_sprzet(Sprzet *head);
 
 Sprzet *dodaj_sprzet(Sprzet *head);

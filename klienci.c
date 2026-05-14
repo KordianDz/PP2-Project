@@ -1,5 +1,6 @@
 #include "klienci.h"
 #include "wypozyczenia.h"
+#include "funkcje_universalne.h"
 #include <string.h>
 
 #ifdef _WIN32
@@ -62,6 +63,103 @@ void wyswietlanie_klientow(Klient *head)
         // Format: ID_KARTY|IMIE|NAZWISKO|MIASTO
         printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
         obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head)
+{
+    if(head == NULL || head->next == NULL)
+        {
+            return;
+        }
+
+    Klient *obecny = head;
+    Klient *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(porownaj_male_litery(obecny->nazwisko, nastepny->nazwisko) > 0)
+            {
+                Klient *oryginal_obecny_next = obecny->next;
+                Klient *oryginal_nastepny_next = nastepny->next;
+
+                Klient temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+    obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_klientow_alfabetycznie_imie(Klient *head)
+{
+    if(head == NULL || head->next == NULL)
+        {
+            return;
+        }
+
+    Klient *obecny = head;
+    Klient *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(porownaj_male_litery(obecny->imie, nastepny->imie) > 0)
+            {
+                
+                Klient *oryginal_obecny_next = obecny->next;
+                Klient *oryginal_nastepny_next = nastepny->next;
+
+                Klient temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+    obecny = obecny->next;
     }
 }
 
