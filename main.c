@@ -32,7 +32,9 @@ int main()
         printf("4. Podpisz nowy kontrakt.\n");
         printf("5. Zwrot sprzetu (oddanie).\n");
         printf("6. Usun z bazy danych (Klienci/Sprzet).\n");
-        printf("7. BEZPIECZNE zamkniecie programu.\n");
+        printf("7. Wyszukaj klienta.\n");
+        printf("8. Wyszukaj sprzęt.\n");
+        printf("9. BEZPIECZNE zamkniecie programu.\n");
         if (scanf("%d", &opcja) != 1)
         {
             while(getchar() != '\n');
@@ -158,6 +160,74 @@ int main()
                 }
                 case 7:
                 {
+                    printf("Wybierz po czym chcesz wyszukać klienta: \n");
+                    printf("1. Po numerze karty klienta. \n");
+                    printf("2. Po danych klienta. \n");
+                    int opcja3 = 0;
+                    if (scanf("%d", &opcja3) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja3 = -1;
+                    }
+                    else
+                    {
+                        switch(opcja3)
+                        {
+                            case 1:
+                            {
+                                wyszukaj_klienta(head_klienci);
+                                break;
+                            }   
+                            case 2:
+                            {
+                                wyszukaj_klienta_imie_nazwisko(head_klienci);
+                                break;
+                            }
+                            default:
+                            {
+                                printf("Niepoprawna opcja!\n");
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    printf("Wybierz po czym chcesz wyszukać sprzęt: \n");
+                    printf("1. Po ID sprzętu. \n");
+                    printf("2. Po nazwie sprzętu. \n");
+                    int opcja4 = 0;
+                    if (scanf("%d", &opcja4) != 1)
+                    {
+                        while(getchar() != '\n');
+                        opcja4 = -1;
+                    }
+                    else
+                    {
+                        switch(opcja4)
+                        {
+                            case 1:
+                            {
+                                wyszukaj_sprzet(head_sprzet);
+                                break;
+                            }
+                            case 2:
+                            {
+                                wyszukaj_sprzet_nazwa(head_sprzet);
+                                break;
+                            }
+                            default:
+                            {
+                                printf("Niepoprawna opcja!\n");
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 9:
+                {
                     printf("Zamykanie... Zaczekaj do konca aby uniknac utraty danych!\n");
                     zapis_sprzet(head_sprzet);
                     zapis_archiwum(head_archiwum);
@@ -183,13 +253,14 @@ int main()
 }
 
 //%%%%%%%%%%%%%%%%%% TO DO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//dodac sortowanie, wyszukiwanie, wyswietlanie 5 ostatnich z historii
+//dodac sortowanie, wyswietlanie 5 ostatnich z historii
 //szyfrowanie, podzial funkcji na inne pliki
-//naprawic buffer overflow to dzisiaj
 //bugfix usuwanie sprzetu po zamknieciu kontraktu z data wczesniejsza niz wypozyczenie
 //bugfix zmienna przyjmuje tylko liczby, a liter/znaku nie
 
-
+//%%%% JUZ ZROBIONE %%%%%%%%%%%%%%%%
+//wyszukiwanie
+//naprawic buffer overflow to dzisiaj
 //dodalem usuwanie klientow/sprzetu
 //dodalem modularnosc plikow
 //menu ma wszystkie wymienione wczesniej funkcje 

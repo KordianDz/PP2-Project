@@ -176,3 +176,56 @@ void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia)
     printf("Pomyslnie usunieto klienta z bazy.\n");
     return;
 }
+
+void wyszukaj_klienta(Klient *head)
+{
+    int szukaj_po_karcie;
+    Klient *szukany = head;
+
+    printf("Podaj numer karty klienta.\n");
+    scanf(" %d", &szukaj_po_karcie);
+
+    while(szukany != NULL && szukaj_po_karcie != szukany->numer_karty)
+    {
+        szukany = szukany->next;
+    }
+    if(szukany == NULL)
+    {
+        printf("Nie znaleziono klienta z takim numerem karty!");
+    }
+    else
+    {
+        printf("%d|%s|%s|%s\n", szukany->numer_karty, szukany->imie, szukany->nazwisko, szukany->miasto);
+    }
+}
+
+void wyszukaj_klienta_imie_nazwisko(Klient *head)
+{
+    char temp_imie[20];
+    char temp_nazwisko[30];
+    Klient *obecny = head;
+    bool znaleziono = false;
+
+    printf("Podaj imie klienta\n");
+    scanf("%19s", temp_imie);
+
+    printf("Podaj nazwisko klienta\n");
+    scanf("%29s", temp_nazwisko);
+
+    while(obecny != NULL)
+    {
+
+         if(strcmp(obecny->imie, temp_imie) == 0 && strcmp(obecny->nazwisko, temp_nazwisko) == 0)
+         {
+           printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+           znaleziono = true;
+         }
+         obecny = obecny->next;
+
+    }
+    if(znaleziono == false)
+    {
+        printf("Nie znaleziono klienta w bazie danych.\n");
+    }
+
+}

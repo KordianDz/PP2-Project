@@ -154,3 +154,52 @@ void usun_sprzet(Sprzet **h_sprzet)
     printf("Pomyslnie usunieto sprzet z bazy.\n");
     return;
 }
+
+void wyszukaj_sprzet(Sprzet *head)
+{
+    int szukaj_po_id;
+    Sprzet *szukany = head;
+
+    printf("Podaj id szukanego sprzętu.\n");
+    scanf(" %d", &szukaj_po_id);
+
+    while(szukany != NULL && szukaj_po_id != szukany->id_sprzetu)
+    {
+        szukany = szukany->next;
+    }
+    if(szukany == NULL)
+    {
+        printf("Nie znaleziono takiego sprzętu!");
+    }
+    else
+    {
+        printf("%d|%s|%ld|%d|%d\n", szukany->id_sprzetu, szukany->nazwa_sprzetu, szukany->cena_za_dzien, szukany->liczba_egzemplarzy, szukany->liczba_wypozyczonych);
+    }
+}
+
+void wyszukaj_sprzet_nazwa(Sprzet *head)
+{
+    char temp_nazwa[30];
+    Sprzet *obecny = head;
+    bool znaleziono = false;
+
+    printf("Podaj nazwe sprzętu którego szukasz.\n");
+    scanf("%29s", temp_nazwa);
+
+    while(obecny != NULL)
+    {
+
+         if(strcmp(obecny->nazwa_sprzetu, temp_nazwa) == 0)
+         {
+           printf("%d|%s|%ld|%d|%d\n", obecny->id_sprzetu, obecny->nazwa_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych);
+           znaleziono = true;
+         }
+         obecny = obecny->next;
+
+    }
+    if(znaleziono == false)
+    {
+        printf("Nie znaleziono sprzętu w bazie danych.\n");
+    }
+
+}

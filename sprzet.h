@@ -28,4 +28,9 @@ Sprzet *dodaj_sprzet(Sprzet *head);
 
 void usun_sprzet(Sprzet **h_sprzet);
 
+void wyszukaj_sprzet(Sprzet *head);
+
+void wyszukaj_sprzet_nazwa(Sprzet *head);
+
+
 #endif

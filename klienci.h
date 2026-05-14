@@ -33,4 +33,8 @@ void wyczysc_pamiec_klient(Klient *head);
 
 void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia);
 
+void wyszukaj_klienta(Klient *head);
+
+void wyszukaj_klienta_imie_nazwisko(Klient *head);
+
 #endif
