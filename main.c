@@ -103,7 +103,10 @@ int main()
                             {
                                 int opcja2_2 = 0;
                                 printf("1. Wyświetl w kolejnosci dodania.\n");
-                                printf("2. Wyświetl w kolejnosci alfabetycznej po nazwie.\n");
+                                printf("2. Wyświetl po ID.\n");
+                                printf("3. Wyświetl po nazwie.\n");
+                                printf("4. Wyświetl po egzemplarzach.\n");
+                                printf("5. Wyświetl po wypozyczonych.\n");
                                 if (scanf("%d", &opcja2_2) != 1)
                                 {
                                     while(getchar() != '\n')
@@ -118,7 +121,119 @@ int main()
                                     }
                                     case 2:
                                     {
-                                        wyswietlanie_sprzetu_alfabetycznie(head_sprzet);
+                                        int opcja2_1_1 = 0;
+                                        printf("1. Wyświetl w kolejnosci rosnącej.\n");
+                                        printf("2. Wyświetl w kolejnosci malejącej.\n");
+                                        if (scanf("%d", &opcja2_1_1) != 1)
+                                        {
+                                            while(getchar() != '\n')
+                                            opcja2_1_1 = -1;
+                                        }
+                                        switch(opcja2_1_1)
+                                        {
+                                            case 1:
+                                            {
+                                                wyswietlanie_sprzet_po_id(head_sprzet, 1);
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                wyswietlanie_sprzet_po_id(head_sprzet, 2);
+                                                break;
+                                            }
+                                            default:
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        int opcja2_1_2 = 0;
+                                        printf("1. Wyświetl w kolejnosci A-Z.\n");
+                                        printf("2. Wyświetl w kolejnosci Z-A.\n");
+                                        if (scanf("%d", &opcja2_1_2) != 1)
+                                        {
+                                            while(getchar() != '\n')
+                                            opcja2_1_2 = -1;
+                                        }
+                                        switch(opcja2_1_2)
+                                        {
+                                            case 1:
+                                            {
+                                                wyswietlanie_sprzetu_alfabetycznie(head_sprzet, 1);
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                wyswietlanie_sprzetu_alfabetycznie(head_sprzet, 2);
+                                                break;
+                                            }
+                                            default:
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        int opcja2_1_3 = 0;
+                                        printf("1. Wyświetl w kolejnosci rosnącej.\n");
+                                        printf("2. Wyświetl w kolejnosci malejącej.\n");
+                                        if (scanf("%d", &opcja2_1_3) != 1)
+                                        {
+                                            while(getchar() != '\n')
+                                            opcja2_1_3 = -1;
+                                        }
+                                        switch(opcja2_1_3)
+                                        {
+                                            case 1:
+                                            {
+                                                wyswietlanie_sprzet_po_egzemplarzach(head_sprzet, 1);
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                wyswietlanie_sprzet_po_egzemplarzach(head_sprzet, 2);
+                                                break;
+                                            }
+                                            default:
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 5:
+                                    {
+                                        int opcja2_1_4 = 0;
+                                        printf("1. Wyświetl w kolejnosci rosnącej.\n");
+                                        printf("2. Wyświetl w kolejnosci malejącej.\n");
+                                        if (scanf("%d", &opcja2_1_4) != 1)
+                                        {
+                                            while(getchar() != '\n')
+                                            opcja2_1_4 = -1;
+                                        }
+                                        switch(opcja2_1_4)
+                                        {
+                                            case 1:
+                                            {
+                                                wyswietlanie_sprzet_po_wypozyczonych(head_sprzet, 1);
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                wyswietlanie_sprzet_po_wypozyczonych(head_sprzet, 2);
+                                                break;
+                                            }
+                                            default:
+                                            {
+                                                break;
+                                            }
+                                        }
                                         break;
                                     }
                                     default:

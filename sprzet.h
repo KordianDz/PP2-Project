@@ -22,7 +22,13 @@ Sprzet *wczytaj_sprzet();
 
 void wyswietlanie_sprzetu(Sprzet *head);
 
-void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head);
+void wyswietlanie_sprzet_po_id(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzet_po_egzemplarzach(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzet_po_wypozyczonych(Sprzet *head, int kierunek);
 
 void wyczysc_pamiec_sprzet(Sprzet *head);
 

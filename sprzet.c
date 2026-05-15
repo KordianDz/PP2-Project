@@ -77,7 +77,68 @@ void wyswietlanie_sprzetu(Sprzet *head)
     }
 }
 
-void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head)
+void wyswietlanie_sprzet_po_id(Sprzet *head, int kierunek) 
+{
+    if(head == NULL || head->next == NULL)
+    {
+        return;
+    }
+
+    Sprzet *obecny = head;
+    Sprzet *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+
+            bool warunek_zamiany = false;
+
+            if (kierunek == 1 && obecny->id_sprzetu > nastepny->id_sprzetu) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby wiekszy byl pozniej
+            }
+            else if (kierunek == 2 && obecny->id_sprzetu < nastepny->id_sprzetu) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby mniejszy byl pozniej
+            }
+
+            if(warunek_zamiany == true)
+            {
+                Sprzet *oryginal_obecny_next = obecny->next;
+                Sprzet *oryginal_nastepny_next = nastepny->next;
+
+                Sprzet temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+
+            obecny = obecny->next;
+            nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+        printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
+        obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head, int kierunek)
 {
     if(head == NULL || head->next == NULL)
         {
@@ -97,7 +158,20 @@ void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head)
 
         while(nastepny != NULL)
         {
-                if(porownaj_male_litery(obecny->nazwa_sprzetu, nastepny->nazwa_sprzetu) > 0)
+
+            bool warunek_zamiany = false;
+
+            if (kierunek == 1 && porownaj_male_litery(obecny->nazwa_sprzetu, nastepny->nazwa_sprzetu) > 0) 
+            {
+                warunek_zamiany = true; // zamieniamy aby wyswietlał alfabetycznie
+            }
+            else if (kierunek == 2 && porownaj_male_litery(obecny->nazwa_sprzetu, nastepny->nazwa_sprzetu) < 0) 
+            {
+                warunek_zamiany = true; // zamieniamy aby wyswietlal od tylu alfabetu
+            }
+            //
+
+                if(warunek_zamiany == true)
             {
                 Sprzet *oryginal_obecny_next = obecny->next;
                 Sprzet *oryginal_nastepny_next = nastepny->next;
@@ -123,6 +197,128 @@ void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head)
     {
     printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
     obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_sprzet_po_egzemplarzach(Sprzet *head, int kierunek) 
+{
+    if(head == NULL || head->next == NULL)
+    {
+        return;
+    }
+
+    Sprzet *obecny = head;
+    Sprzet *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+
+            bool warunek_zamiany = false;
+
+            if (kierunek == 1 && obecny->liczba_egzemplarzy > nastepny->liczba_egzemplarzy) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby wiekszy byl pozniej
+            }
+            else if (kierunek == 2 && obecny->liczba_egzemplarzy < nastepny->liczba_egzemplarzy) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby mniejszy byl pozniej
+            }
+
+            if(warunek_zamiany == true)
+            {
+                Sprzet *oryginal_obecny_next = obecny->next;
+                Sprzet *oryginal_nastepny_next = nastepny->next;
+
+                Sprzet temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+
+            obecny = obecny->next;
+            nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+        printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
+        obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_sprzet_po_wypozyczonych(Sprzet *head, int kierunek) 
+{
+    if(head == NULL || head->next == NULL)
+    {
+        return;
+    }
+
+    Sprzet *obecny = head;
+    Sprzet *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+
+            bool warunek_zamiany = false;
+
+            if (kierunek == 1 && obecny->liczba_wypozyczonych > nastepny->liczba_wypozyczonych) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby wiekszy byl pozniej
+            }
+            else if (kierunek == 2 && obecny->liczba_wypozyczonych < nastepny->liczba_wypozyczonych) 
+            {
+                warunek_zamiany = true; // zamieniamy zeby mniejszy byl pozniej
+            }
+
+            if(warunek_zamiany == true)
+            {
+                Sprzet *oryginal_obecny_next = obecny->next;
+                Sprzet *oryginal_nastepny_next = nastepny->next;
+
+                Sprzet temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+
+            obecny = obecny->next;
+            nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+        printf("%d|%.2f|%d|%d|%s\n", obecny->id_sprzetu, obecny->cena_za_dzien, obecny->liczba_egzemplarzy, obecny->liczba_wypozyczonych, obecny->nazwa_sprzetu);
+        obecny = obecny->next;
     }
 }
 
