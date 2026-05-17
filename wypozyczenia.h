@@ -21,6 +21,12 @@ typedef struct Wypozyczenie
     struct Wypozyczenie *next;
 } Wypozyczenie;
 
+typedef struct ElementStosu
+{
+    Wypozyczenie dane_wypozyczenia;
+    struct ElementStosu *next;
+} ElementStosu;
+
 void wyswietlanie_ofert(Wypozyczenie *head);
 
 void wyswietlanie_ofert_od_najdrozszej(Wypozyczenie *head);
@@ -42,5 +48,9 @@ void zwroc_sprzet(Klient **hz_klienci, Sprzet **hz_sprzet, Wypozyczenie **hz_wyp
 void wyczysc_pamiec_archiwum(Wypozyczenie *head);
 
 void wyczysc_pamiec_oferty(Wypozyczenie *head);
+
+void push(ElementStosu **wierzcholek, Wypozyczenie nowe_dane);
+
+void wyswietl_historie(ElementStosu *wierzcholek);
 
 #endif

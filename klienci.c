@@ -68,8 +68,11 @@ void wyswietlanie_klientow(Klient *head)
 
 void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head)
 {
-    if(head == NULL || head->next == NULL)
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
         {
+            printf("%d|%s|%s|%s\n", head->numer_karty, head->imie, head->nazwisko, head->miasto);
             return;
         }
 
@@ -116,8 +119,11 @@ void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head)
 
 void wyswietlanie_klientow_alfabetycznie_imie(Klient *head)
 {
-    if(head == NULL || head->next == NULL)
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
         {
+            printf("%d|%s|%s|%s\n", head->numer_karty, head->imie, head->nazwisko, head->miasto);
             return;
         }
 

@@ -23,8 +23,11 @@ void wyswietlanie_ofert(Wypozyczenie *head)
 
 void wyswietlanie_ofert_od_najdrozszej(Wypozyczenie *head)
 {
-    if(head == NULL || head->next == NULL)
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
         {
+            printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", head->data_wypozyczenia.dzien, head->data_wypozyczenia.miesiac, head->data_wypozyczenia.rok, head->id_sprzetu, head->numer_karty, head->oplacona_kwota, head->przewidywana_data_oddania.dzien, head->przewidywana_data_oddania.miesiac, head->przewidywana_data_oddania.rok, head->realna_data_oddania.dzien, head->realna_data_oddania.miesiac, head->realna_data_oddania.rok);
             return;
         }
 
@@ -71,8 +74,11 @@ void wyswietlanie_ofert_od_najdrozszej(Wypozyczenie *head)
 
 void wyswietlanie_ofert_od_najtanszej(Wypozyczenie *head)
 {
-    if(head == NULL || head->next == NULL)
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
         {
+            printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", head->data_wypozyczenia.dzien, head->data_wypozyczenia.miesiac, head->data_wypozyczenia.rok, head->id_sprzetu, head->numer_karty, head->oplacona_kwota, head->przewidywana_data_oddania.dzien, head->przewidywana_data_oddania.miesiac, head->przewidywana_data_oddania.rok, head->realna_data_oddania.dzien, head->realna_data_oddania.miesiac, head->realna_data_oddania.rok);
             return;
         }
 
@@ -386,6 +392,68 @@ void wyczysc_pamiec_oferty(Wypozyczenie *head)
         tmp = obecny -> next;
         free(obecny);
         obecny = tmp;
+    }
+}
+
+void push(ElementStosu **wierzcholek, Wypozyczenie nowe_dane)
+{
+    ElementStosu *nowy_element = malloc(sizeof(ElementStosu));
+    if (nowy_element == NULL)
+    {
+        printf("Blad. Brak pamieci RAM dla stosu!\n");
+        return;
+    }
+    
+    nowy_element->dane_wypozyczenia = nowe_dane;
+    nowy_element->next = *wierzcholek;
+    *wierzcholek = nowy_element;
+
+    ElementStosu *obecny = *wierzcholek;
+    int licznik = 1;
+
+    while (licznik < 5 && obecny != NULL && obecny->next != NULL)
+    {
+        obecny = obecny->next;
+        licznik++;
+    }
+
+    if (obecny != NULL && obecny->next != NULL)
+    {
+        ElementStosu *temp = obecny->next;
+        obecny->next = NULL;
+        free(temp);
+    }
+}
+
+void wyswietl_historie(ElementStosu *wierzcholek)
+{
+    if (wierzcholek == NULL)
+    {
+        printf("Historia wypozyczen jest pusta.\n");
+        return;
+    }
+
+    printf("Wyswietlam 5 ostatnich wypozyczen.\n");
+    ElementStosu *obecny = wierzcholek;
+    
+    while (obecny != NULL)
+    {
+        // Format: data wypozyczenia|id sprzetu|numer karty|oplacona kwota|przewidywana data|realna data
+        printf("%02d.%02d.%d|%d|%d|%.2f|%02d.%02d.%d|%02d.%02d.%d\n", 
+            obecny->dane_wypozyczenia.data_wypozyczenia.dzien, 
+            obecny->dane_wypozyczenia.data_wypozyczenia.miesiac, 
+            obecny->dane_wypozyczenia.data_wypozyczenia.rok, 
+            obecny->dane_wypozyczenia.id_sprzetu, 
+            obecny->dane_wypozyczenia.numer_karty, 
+            obecny->dane_wypozyczenia.oplacona_kwota, 
+            obecny->dane_wypozyczenia.przewidywana_data_oddania.dzien, 
+            obecny->dane_wypozyczenia.przewidywana_data_oddania.miesiac, 
+            obecny->dane_wypozyczenia.przewidywana_data_oddania.rok, 
+            obecny->dane_wypozyczenia.realna_data_oddania.dzien, 
+            obecny->dane_wypozyczenia.realna_data_oddania.miesiac, 
+            obecny->dane_wypozyczenia.realna_data_oddania.rok);
+            
+        obecny = obecny->next;
     }
 }
 

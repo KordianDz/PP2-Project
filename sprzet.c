@@ -79,10 +79,13 @@ void wyswietlanie_sprzetu(Sprzet *head)
 
 void wyswietlanie_sprzet_po_id(Sprzet *head, int kierunek) 
 {
-    if(head == NULL || head->next == NULL)
-    {
+    if (head == NULL)
         return;
-    }
+    if (head->next == NULL)
+        {
+            printf("%d|%.2f|%d|%d|%s\n", head->id_sprzetu, head->cena_za_dzien, head->liczba_egzemplarzy, head->liczba_wypozyczonych, head->nazwa_sprzetu);
+            return;
+        }
 
     Sprzet *obecny = head;
     Sprzet *nastepny = obecny->next;
@@ -140,8 +143,11 @@ void wyswietlanie_sprzet_po_id(Sprzet *head, int kierunek)
 
 void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head, int kierunek)
 {
-    if(head == NULL || head->next == NULL)
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
         {
+            printf("%d|%.2f|%d|%d|%s\n", head->id_sprzetu, head->cena_za_dzien, head->liczba_egzemplarzy, head->liczba_wypozyczonych, head->nazwa_sprzetu);
             return;
         }
 
@@ -202,10 +208,13 @@ void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head, int kierunek)
 
 void wyswietlanie_sprzet_po_egzemplarzach(Sprzet *head, int kierunek) 
 {
-    if(head == NULL || head->next == NULL)
-    {
+    if (head == NULL)
         return;
-    }
+    if (head->next == NULL)
+        {
+            printf("%d|%.2f|%d|%d|%s\n", head->id_sprzetu, head->cena_za_dzien, head->liczba_egzemplarzy, head->liczba_wypozyczonych, head->nazwa_sprzetu);
+            return;
+        }
 
     Sprzet *obecny = head;
     Sprzet *nastepny = obecny->next;
@@ -263,10 +272,13 @@ void wyswietlanie_sprzet_po_egzemplarzach(Sprzet *head, int kierunek)
 
 void wyswietlanie_sprzet_po_wypozyczonych(Sprzet *head, int kierunek) 
 {
-    if(head == NULL || head->next == NULL)
-    {
+    if (head == NULL)
         return;
-    }
+    if (head->next == NULL)
+        {
+            printf("%d|%.2f|%d|%d|%s\n", head->id_sprzetu, head->cena_za_dzien, head->liczba_egzemplarzy, head->liczba_wypozyczonych, head->nazwa_sprzetu);
+            return;
+        }
 
     Sprzet *obecny = head;
     Sprzet *nastepny = obecny->next;

@@ -21,6 +21,7 @@ int main()
     Sprzet *head_sprzet = wczytaj_sprzet();
     Wypozyczenie *head_wypozyczenia = wczytaj_baze_ofert();
     Wypozyczenie *head_archiwum = wczytaj_archiwum();
+    ElementStosu *historia_wypozyczen = NULL;
     
     //main sys 
     while(1)
@@ -249,6 +250,7 @@ int main()
                                 printf("1. Wyświetl w kolejnosci dodania.\n");
                                 printf("2. Wyświetl w kolejnosci od najdroższej.\n");
                                 printf("3. Wyświetl w kolejnosci od najtańszej.\n");
+                                printf("4. Wyswietl 5 ostatnich wypozyczen.\n");
                                 if (scanf("%d", &opcja2_3) != 1)
                                 {
                                     while(getchar() != '\n')
@@ -269,6 +271,11 @@ int main()
                                     case 3:
                                     {
                                         wyswietlanie_ofert_od_najtanszej(head_wypozyczenia);
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        wyswietl_historie(historia_wypozyczen);
                                         break;
                                     }
                                     default:
@@ -332,7 +339,12 @@ int main()
                 case 4:
                 {
                     printf("Podpisanie kontraktu (wypozyczenie sprzetu np. nart)\n");
+                    Wypozyczenie *stary_head = head_wypozyczenia;
                     dodaj_wypozyczenie(&head_klienci, &head_sprzet, &head_wypozyczenia);
+                    if (head_wypozyczenia != stary_head)
+                    {
+                        push(&historia_wypozyczen, *head_wypozyczenia);
+                    }
                     break;
                 }
                 case 5:
