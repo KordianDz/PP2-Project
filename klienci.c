@@ -1,5 +1,6 @@
 #include "klienci.h"
 #include "wypozyczenia.h"
+#include "funkcje_universalne.h"
 #include <string.h>
 
 #ifdef _WIN32
@@ -62,6 +63,109 @@ void wyswietlanie_klientow(Klient *head)
         // Format: ID_KARTY|IMIE|NAZWISKO|MIASTO
         printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
         obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head)
+{
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
+        {
+            printf("%d|%s|%s|%s\n", head->numer_karty, head->imie, head->nazwisko, head->miasto);
+            return;
+        }
+
+    Klient *obecny = head;
+    Klient *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(porownaj_male_litery(obecny->nazwisko, nastepny->nazwisko) > 0)
+            {
+                Klient *oryginal_obecny_next = obecny->next;
+                Klient *oryginal_nastepny_next = nastepny->next;
+
+                Klient temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+    obecny = obecny->next;
+    }
+}
+
+void wyswietlanie_klientow_alfabetycznie_imie(Klient *head)
+{
+    if (head == NULL)
+        return;
+    if (head->next == NULL)
+        {
+            printf("%d|%s|%s|%s\n", head->numer_karty, head->imie, head->nazwisko, head->miasto);
+            return;
+        }
+
+    Klient *obecny = head;
+    Klient *nastepny = obecny->next;
+    bool zamieniono = false;
+
+    do
+    {
+        zamieniono = false;
+        obecny = head;
+        nastepny = obecny->next;
+
+        while(nastepny != NULL)
+        {
+                if(porownaj_male_litery(obecny->imie, nastepny->imie) > 0)
+            {
+                
+                Klient *oryginal_obecny_next = obecny->next;
+                Klient *oryginal_nastepny_next = nastepny->next;
+
+                Klient temp = *obecny;
+                *obecny = *nastepny;
+                *nastepny = temp;
+
+                obecny->next = oryginal_obecny_next;
+                nastepny->next = oryginal_nastepny_next;
+
+                zamieniono = true;
+            }
+        obecny = obecny->next;
+        nastepny = nastepny->next;
+        }
+        
+    }
+    while (zamieniono == true);
+
+    obecny = head;
+    while (obecny != NULL)
+    {
+    printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+    obecny = obecny->next;
     }
 }
 
@@ -175,4 +279,57 @@ void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia)
     free(obecny_klient);
     printf("Pomyslnie usunieto klienta z bazy.\n");
     return;
+}
+
+void wyszukaj_klienta(Klient *head)
+{
+    int szukaj_po_karcie;
+    Klient *szukany = head;
+
+    printf("Podaj numer karty klienta.\n");
+    scanf(" %d", &szukaj_po_karcie);
+
+    while(szukany != NULL && szukaj_po_karcie != szukany->numer_karty)
+    {
+        szukany = szukany->next;
+    }
+    if(szukany == NULL)
+    {
+        printf("Nie znaleziono klienta z takim numerem karty!");
+    }
+    else
+    {
+        printf("%d|%s|%s|%s\n", szukany->numer_karty, szukany->imie, szukany->nazwisko, szukany->miasto);
+    }
+}
+
+void wyszukaj_klienta_imie_nazwisko(Klient *head)
+{
+    char temp_imie[20];
+    char temp_nazwisko[30];
+    Klient *obecny = head;
+    bool znaleziono = false;
+
+    printf("Podaj imie klienta\n");
+    scanf("%19s", temp_imie);
+
+    printf("Podaj nazwisko klienta\n");
+    scanf("%29s", temp_nazwisko);
+
+    while(obecny != NULL)
+    {
+
+         if(strcmp(obecny->imie, temp_imie) == 0 && strcmp(obecny->nazwisko, temp_nazwisko) == 0)
+         {
+           printf("%d|%s|%s|%s\n", obecny->numer_karty, obecny->imie, obecny->nazwisko, obecny->miasto);
+           znaleziono = true;
+         }
+         obecny = obecny->next;
+
+    }
+    if(znaleziono == false)
+    {
+        printf("Nie znaleziono klienta w bazie danych.\n");
+    }
+
 }

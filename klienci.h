@@ -25,6 +25,10 @@ Klient *dodaj_klienta(Klient *head);
 
 void wyswietlanie_klientow(Klient *head);
 
+void wyswietlanie_klientow_alfabetycznie_nazwisko(Klient *head);
+
+void wyswietlanie_klientow_alfabetycznie_imie(Klient *head);
+
 bool zapis_klienci(Klient *head);
 
 Klient *wczytaj_baze_klientow();
@@ -32,5 +36,9 @@ Klient *wczytaj_baze_klientow();
 void wyczysc_pamiec_klient(Klient *head);
 
 void Usun_klienta(Klient **h_klienci, struct Wypozyczenie *head_wypozyczenia);
+
+void wyszukaj_klienta(Klient *head);
+
+void wyszukaj_klienta_imie_nazwisko(Klient *head);
 
 #endif

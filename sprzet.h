@@ -22,10 +22,23 @@ Sprzet *wczytaj_sprzet();
 
 void wyswietlanie_sprzetu(Sprzet *head);
 
+void wyswietlanie_sprzet_po_id(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzetu_alfabetycznie(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzet_po_egzemplarzach(Sprzet *head, int kierunek);
+
+void wyswietlanie_sprzet_po_wypozyczonych(Sprzet *head, int kierunek);
+
 void wyczysc_pamiec_sprzet(Sprzet *head);
 
 Sprzet *dodaj_sprzet(Sprzet *head);
 
 void usun_sprzet(Sprzet **h_sprzet);
+
+void wyszukaj_sprzet(Sprzet *head);
+
+void wyszukaj_sprzet_nazwa(Sprzet *head);
+
 
 #endif
